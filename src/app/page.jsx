@@ -36,8 +36,6 @@ export default function Home() {
       router.push("./dogFast");
     } else if (isDog && isScale === "vetcot") {
       router.push("./dogVetcot");
-    } else if (isCat && isScale === "vetcot") {
-      router.push("./catVetcot");
     }
   };
 
@@ -63,12 +61,22 @@ export default function Home() {
         </button>
       </div>
       <h2 className="text-2xl font-bold mt-2 mb-2">Seleccionar escala</h2>
-      <select className="block appearance-none mx-auto  bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" name="select" onChange={handleOnScaleChange} value={isScale}>
-        <option value="">Seleccione una escala</option>
-        <option value="full">Full</option>
-        <option value="fast">Fast</option>
-        <option value="vetcot">Vetcot</option>
-      </select>
+      {isDog&&(
+ <select className="block appearance-none mx-auto  bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" name="select" onChange={handleOnScaleChange} value={isScale}>
+ <option value="">Seleccione una escala</option>
+ <option value="full">Full</option>
+ <option value="fast">Fast</option>
+ <option value="vetcot">Vetcot</option>
+</select>
+      )}
+      {isCat&&(
+         <select className="block appearance-none mx-auto  bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" name="select" onChange={handleOnScaleChange} value={isScale}>
+         <option value="">Seleccione una escala</option>
+         <option value="full">Full</option>
+         <option value="fast">Fast</option>
+       </select>
+      )}
+     
       
       <div className="mt-8">
 

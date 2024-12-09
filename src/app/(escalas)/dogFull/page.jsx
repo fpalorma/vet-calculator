@@ -1,19 +1,37 @@
-'use client'
+"use client";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-
+import Modal from "@/app/components/Modal.jsx"
 
 export default function Page() {
+  const [ isModal, setModal ] = useState(false);
+  const [ score, setScore ] = useState(0);
+  const [ percentage, setPercentage ] = useState(0);
+  const { register, handleSubmit } = useForm();
+  const onSubmit = handleSubmit((data) => {
+    function sumObjectValues(obj) {
+      return Object.values(obj).reduce((sum, value) => sum + value, 0);
+    }
+    console.log(data);
+    const totalScore = sumObjectValues(data)
+    setScore(totalScore);
+    console.log("El apple Score es de: " + totalScore);
+    const r2 = 0.237 * totalScore - 8.294;
+    const probabilidad = 2.71 ** r2 / (1 + 2.71 ** r2);
+    console.log("Procentaje es de: " + Math.floor(probabilidad * 100) + "%");
+    setPercentage(Math.floor(probabilidad * 100))
+    setModal(true)
+    console.log("Modal esta "+isModal);
+  });
 
-  const {register, handleSubmit} =useForm()
+  const closeModal = ()=>{
+    setModal(false)
+  }
 
   return (
     <main className="block text-center">
       <h1 className="text-2xl font-bold ">Escala Apple full para perro</h1>
-      <form onSubmit={handleSubmit((data)=>{
-       
-        console.log(data);
-        console.log(typeof(data.age));
-      })}>
+      <form onSubmit={onSubmit}>
         <div className=" mx-auto w-fit mb-4">
           <label
             className="block  tracking-wide text-gray-700 text-sm font-bold mb-2 mt-2 text-start"
@@ -24,7 +42,8 @@ export default function Page() {
           <div className="relative">
             <select
               className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              id="creatinine" {...register("creatinine",{ valueAsNumber: true }) }
+              id="creatinine"
+              {...register("creatinine", { valueAsNumber: true })}
             >
               <option value={0}>0 - 0.62</option>
               <option value={1}>0.63 - 1.35</option>
@@ -51,7 +70,8 @@ export default function Page() {
           <div className="relative">
             <select
               className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              id="wbc" {...register("wbc",{ valueAsNumber: true })}
+              id="wbc"
+              {...register("wbc", { valueAsNumber: true })}
             >
               <option value={0}>5.1 - 8.5</option>
               <option value={2}>8.6 - 18</option>
@@ -78,7 +98,8 @@ export default function Page() {
           <div className="relative">
             <select
               className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              id="albumin" {...register("albumin",{ valueAsNumber: true })}
+              id="albumin"
+              {...register("albumin", { valueAsNumber: true })}
             >
               <option value={0}>3.3 - 3.5</option>
               <option value={2}>&gt; 3.5</option>
@@ -106,7 +127,8 @@ export default function Page() {
           <div className="relative">
             <select
               className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              id="spo2" {...register("spo2",{ valueAsNumber: true })}
+              id="spo2"
+              {...register("spo2", { valueAsNumber: true })}
             >
               <option value={0}>98 - 100</option>
               <option value={1}>95 - 97</option>
@@ -133,7 +155,8 @@ export default function Page() {
           <div className="relative">
             <select
               className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              id="bilirubin" {...register("bilirubin",{ valueAsNumber: true })}
+              id="bilirubin"
+              {...register("bilirubin", { valueAsNumber: true })}
             >
               <option value={0}>0 - 0.23</option>
               <option value={6}>0.24 - 0.46</option>
@@ -155,18 +178,23 @@ export default function Page() {
             className="block  tracking-wide text-gray-700 text-sm font-bold mb-2 mt-2 text-start"
             htmlFor="mentation"
           >
-            Mentatio Score
+            Mentation Score
           </label>
           <div className="relative">
             <select
-              className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              id="mentation" {...register("mentation",{ valueAsNumber: true })}
+              className=" max-w-[200px] truncate block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              id="mentation"
+              {...register("mentation", { valueAsNumber: true })}
             >
-              <option value={0}>0</option>
-              <option value={5}>1</option>
-              <option value={7}>2</option>
-              <option value={8}>3</option>
-              <option value={13}>4</option>
+              <option value={0}>Normal</option>
+              <option value={5}>
+                Able to stand unassisted, responsive but dull
+              </option>
+              <option value={7}>
+                Can stand only when assisted, responsive but dull
+              </option>
+              <option value={8}>Unabled to stand, responsive</option>
+              <option value={13}>Unabled to stand, unresponsive</option>
             </select>
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
               <svg
@@ -188,7 +216,8 @@ export default function Page() {
           <div className="relative">
             <select
               className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              id="respiratory" {...register("respiratory",{ valueAsNumber: true })}
+              id="respiratory"
+              {...register("respiratory", { valueAsNumber: true })}
             >
               <option value={0}>&lt; 25</option>
               <option value={3}>25 - 36</option>
@@ -216,7 +245,8 @@ export default function Page() {
           <div className="relative">
             <select
               className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              id="age" {...register("age",{ valueAsNumber: true })}
+              id="age"
+              {...register("age", { valueAsNumber: true })}
             >
               <option value={0}>0 - 2</option>
               <option value={6}>3 - 5</option>
@@ -242,13 +272,20 @@ export default function Page() {
           </label>
           <div className="relative">
             <select
-              className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              id="fluid" {...register("fluid",{ valueAsNumber: true })}
+              className="max-w-[200px] truncate block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              id="fluid"
+              {...register("fluid", { valueAsNumber: true })}
             >
-              <option value={0}>0</option>
-              <option value={4}>1</option>
-              <option value={3}>2</option>
-
+              <option value={0}>
+                Not abdominal, toraxic, or pericardial free fluid identified
+              </option>
+              <option value={4}>
+                Abdominal or toraxic or pericardial free fluid identified
+              </option>
+              <option value={3}>
+                Two or more abdominal, toraxic, and pericardial free fluid
+                identified
+              </option>
             </select>
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
               <svg
@@ -270,7 +307,8 @@ export default function Page() {
           <div className="relative">
             <select
               className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              id="lactate" {...register("lactate",{ valueAsNumber: true })}
+              id="lactate"
+              {...register("lactate", { valueAsNumber: true })}
             >
               <option value={0}>&lt; 18.0</option>
               <option value={2}>18.0 - 71.2</option>
@@ -289,12 +327,17 @@ export default function Page() {
           </div>
         </div>
         <div className="mt-8">
-
-<button type="submit" className={` text-white font-bold py-2 px-4 rounded bg-blue-600 mb-4`}>
-  Continuar
-</button>
-</div>
+          <button
+            type="submit"
+            className={` text-white font-bold py-2 px-4 rounded bg-blue-600 mb-4`}
+          >
+            Continuar
+          </button>
+        </div>
       </form>
+      {
+        isModal&&<Modal titulo="Escala Apple full para perro" percentage={percentage} totalScore={score} handleOnClick={closeModal}/>
+      }
     </main>
   );
 }
