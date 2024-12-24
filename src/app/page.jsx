@@ -66,7 +66,7 @@ export default function Home() {
  <option value="">Seleccione una escala</option>
  <option value="full">Full</option>
  <option value="fast">Fast</option>
- <option value="vetcot">Vetcot</option>
+ <option value="vetcot">VetCOT</option>
 </select>
       )}
       {isCat&&(
