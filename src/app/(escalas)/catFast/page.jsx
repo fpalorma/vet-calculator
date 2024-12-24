@@ -1,18 +1,34 @@
 "use client";
 import { useForm } from "react-hook-form";
+import Modal from "@/app/components/Modal.jsx";
+import { useState } from "react";
 
 export default function Page() {
   const { register, handleSubmit } = useForm();
+  const [isModal, setModal] = useState(false);
+  const [score, setScore] = useState(0);
+  const [percentage, setPercentage] = useState(0);
+
+  const onSubmit = handleSubmit((data) => {
+    function sumObjectValues(obj) {
+      return Object.values(obj).reduce((sum, value) => sum + value, 0);
+    }
+    const totalScore = sumObjectValues(data);
+    setScore(totalScore);
+    const r2 = 0.203 * totalScore - 6.142;
+    const probabilidad = 2.71 ** r2 / (1 + 2.71 ** r2);
+    setPercentage(Math.floor(probabilidad * 100));
+    setModal(true);
+  });
+
+  const closeModal = () => {
+    setModal(false);
+  };
 
   return (
     <main className="block text-center">
       <h1 className="text-2xl font-bold ">Escala Apple fast para gato</h1>
-      <form
-        onSubmit={handleSubmit((data) => {
-          console.log(data);
-          console.log(typeof data.age);
-        })}
-      >
+      <form onSubmit={onSubmit}>
         <div className=" mx-auto w-fit mb-4">
           <label
             className="block  tracking-wide text-gray-700 text-sm font-bold mb-2 mt-2 text-start"
@@ -167,6 +183,14 @@ export default function Page() {
           </button>
         </div>
       </form>
+      {isModal && (
+        <Modal
+          titulo="Escala Apple fast para gato"
+          percentage={percentage}
+          totalScore={score}
+          handleOnClick={closeModal}
+        />
+      )}
     </main>
   );
 }
