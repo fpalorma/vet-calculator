@@ -41,7 +41,7 @@ export default function Home() {
 
   return (
     <main className="block text-center">
-      <h2 className="text-2xl font-bold">Seleccionar raza</h2>
+      <h2 className="text-2xl font-bold">Seleccionar especie</h2>
       <div className="flex justify-center gap-4">
         <button
           className={`border-4 p-2 m-4 ${
