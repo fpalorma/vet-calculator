@@ -149,19 +149,19 @@ export default function Page() {
             className="block  tracking-wide text-gray-700 text-sm font-bold mb-2 mt-2 text-start"
             htmlFor="mentation"
           >
-            Mentation score (mg/dL)
+            Mentation score
           </label>
           <div className="relative">
             <select
-              className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="max-w-[200px] truncate block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               id="mentation"
               {...register("mentation", { valueAsNumber: true })}
             >
-              <option value={0}>0</option>
-              <option value={4}>1</option>
-              <option value={6}>2</option>
-              <option value={7}>3</option>
-              <option value={14}>4</option>
+              <option value={0}>Normal</option>
+              <option value={4}>Able to stand unassisted, responsive but dull</option>
+              <option value={6}>Can stand only when assisted, responsive but dull</option>
+              <option value={7}>Unabled to stand, responsive</option>
+              <option value={14}>Unabled to stand, unresponsive</option>
             </select>
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
               <svg
